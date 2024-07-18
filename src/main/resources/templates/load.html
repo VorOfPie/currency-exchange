@@ -20,9 +20,13 @@
         </div>
     </form>
 
-    <div th:if="${message}">
+    <!-- Message block -->
+    <div th:if="${message}" class="alert alert-success">
         <p th:text="${message}"></p>
     </div>
+
+    <!-- Button to navigate to rate page -->
+    <button onclick="location.href='/currency/rate'" class="btn btn-secondary">Go to Rate Page</button>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function () {

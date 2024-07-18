@@ -22,18 +22,22 @@ public class CurrencyRateController {
 
     @GetMapping("/load")
     public String showLoadPage() {
-            return "load";
+        return "load";
     }
 
     @PostMapping("/load")
-    public String loadRates(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                            Model model) {
+    public String loadRates(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, Model model) {
         currencyApiService.loadRates(date);
         model.addAttribute("message", "Data loaded successfully for date: " + date);
         return "load";
     }
 
     @GetMapping("/rate")
+    public String showRatePage() {
+        return "rate";
+    }
+
+    @PostMapping("/rate")
     public String getRate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                           @RequestParam String currencyCode,
                           Model model) {
