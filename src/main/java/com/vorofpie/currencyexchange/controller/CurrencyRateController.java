@@ -5,31 +5,48 @@ import com.vorofpie.currencyexchange.service.CurrencyApiService;
 import com.vorofpie.currencyexchange.service.CurrencyRateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/v1/currency")
+@Controller
+@RequestMapping("/currency")
 @RequiredArgsConstructor
 public class CurrencyRateController {
 
     private final CurrencyApiService currencyApiService;
     private final CurrencyRateService currencyRateService;
 
+    @GetMapping("/load")
+    public String showLoadPage() {
+        return "load";
+    }
+
     @PostMapping("/load")
-    public ResponseEntity<String> loadRates(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public String loadRates(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, Model model) {
         currencyApiService.loadRates(date);
-        return ResponseEntity.ok("Data loaded successfully for date: " + date);
+        model.addAttribute("message", "Data loaded successfully for date: " + date);
+        return "load";
     }
 
     @GetMapping("/rate")
-    public ResponseEntity<CurrencyRate> getRate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                                                @RequestParam String currencyCode) {
+    public String showRatePage() {
+        return "rate";
+    }
+
+    @PostMapping("/rate")
+    public String getRate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                          @RequestParam String currencyCode,
+                          Model model) {
         Optional<CurrencyRate> rateOptional = currencyRateService.getRateByDateAndCode(date, currencyCode);
-        return rateOptional.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        if (rateOptional.isPresent()) {
+            model.addAttribute("rate", rateOptional.get());
+        } else {
+            model.addAttribute("message", "Rate not found for date: " + date + " and currency code: " + currencyCode);
+        }
+        return "rate";
     }
 }

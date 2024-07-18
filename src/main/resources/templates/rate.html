@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Currency Rate</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+<div class="container">
+    <h2>Currency Rate</h2>
+
+    <!-- Form for getting rate -->
+    <form action="/currency/rate" method="post">
+        <div class="form-group">
+            <label for="getDate">Select a date:</label>
+            <input type="text" id="getDate" name="date" class="form-control" autocomplete="off" />
+
+            <label for="currencyCode">Select a currency:</label>
+            <select id="currencyCode" name="currencyCode" class="form-control">
+                <option value="AUD">Австралийский доллар</option>
+                <option value="AMD">Армянских драмов</option>
+                <option value="BGN">Болгарский лев</option>
+                <option value="BRL">Бразильских реалов</option>
+                <option value="UAH">Гривен</option>
+                <option value="DKK">Датских крон</option>
+                <option value="AED">Дирхамов ОАЭ</option>
+                <option value="USD">Доллар США</option>
+                <option value="VND">Донгов</option>
+                <option value="EUR">Евро</option>
+                <option value="PLN">Злотых</option>
+                <option value="JPY">Иен</option>
+                <option value="INR">Индийских рупий</option>
+                <option value="IRR">Иранских риалов</option>
+                <option value="ISK">Исландских крон</option>
+                <option value="CAD">Канадский доллар</option>
+                <option value="CNY">Китайских юаней</option>
+                <option value="KWD">Кувейтский динар</option>
+                <option value="MDL">Молдавских леев</option>
+                <option value="NZD">Новозеландский доллар</option>
+                <option value="NOK">Норвежских крон</option>
+                <option value="RUB">Российских рублей</option>
+                <option value="XDR">СДР (Специальные права заимствования)</option>
+                <option value="SGD">Сингапурcкий доллар</option>
+                <option value="KGS">Сомов</option>
+                <option value="KZT">Тенге</option>
+                <option value="TRY">Турецких лир</option>
+                <option value="GBP">Фунт стерлингов</option>
+                <option value="CZK">Чешских крон</option>
+                <option value="SEK">Шведских крон</option>
+                <option value="CHF">Швейцарский франк</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary">Get Data</button>
+        </div>
+    </form>
+
+    <!-- Rate display -->
+    <div th:if="${rate}">
+        <p th:text="'Rate: ' + ${rate}"></p>
+    </div>
+
+    <!-- Message block -->
+    <div th:if="${message}">
+        <div class="alert alert-warning">
+            <p th:text="${message}"></p>
+        </div>
+    </div>
+
+    <!-- Button to navigate back to load page -->
+    <button onclick="location.href='/currency/load'" class="btn btn-secondary">Go to Load Page</button>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr('#getDate', {
+            dateFormat: 'Y-m-d'
+        });
+    });
+</script>
+</body>
+</html>
