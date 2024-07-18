@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Load Currency Rates</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+<div class="container">
+    <h2>Load Currency Rates</h2>
+
+    <!-- Form for loading data -->
+    <form action="/currency/load" method="post">
+        <div class="form-group">
+            <label for="loadDate">Select a date:</label>
+            <input type="text" id="loadDate" name="date" class="form-control" autocomplete="off" />
+            <button type="submit" class="btn btn-primary">Load</button>
+        </div>
+    </form>
+
+    <div th:if="${message}">
+        <p th:text="${message}"></p>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr('#loadDate', {
+            dateFormat: 'Y-m-d'
+        });
+    });
+</script>
+</body>
+</html>

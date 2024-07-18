@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Currency Rate</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+<div class="container">
+    <h2>Currency Rate</h2>
+
+    <!-- Form for getting rate -->
+    <form action="/currency/rate" method="get">
+        <div class="form-group">
+            <label for="getDate">Select a date:</label>
+            <input type="text" id="getDate" name="date" class="form-control" autocomplete="off" />
+
+            <label for="currencyCode">Select a currency:</label>
+            <select id="currencyCode" name="currencyCode" class="form-control">
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+                <!-- Add more options as needed -->
+            </select>
+
+            <button type="submit" class="btn btn-primary">Get Data</button>
+        </div>
+    </form>
+
+    <div th:if="${rate}">
+        <p th:text="'Rate: ' + ${rate}"></p>
+    </div>
+
+    <div th:if="${message}">
+        <p th:text="${message}"></p>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr('#getDate', {
+            dateFormat: 'Y-m-d'
+        });
+    });
+</script>
+</body>
+</html>
