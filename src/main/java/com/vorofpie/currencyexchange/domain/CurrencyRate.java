@@ -14,7 +14,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
 public class CurrencyRate {

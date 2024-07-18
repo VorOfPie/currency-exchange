@@ -30,5 +30,4 @@ public record Rate(
         @NotNull(message = "Official rate cannot be null")
         @DecimalMin(value = "0.0", inclusive = false, message = "Official rate must be greater than 0")
         double Cur_OfficialRate
-) {
-}
+) {}
